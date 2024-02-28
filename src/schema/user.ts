@@ -11,21 +11,64 @@ export interface UserDocument extends Document {
 }
 
 const userSchema = new Schema({
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    avatar: { type: String },
-    bio: { type: String },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    name: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    avatar: {
+        type: String
+    },
+    threads: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Thread",
+        },
+    ],
+    bio: {
+        type: String
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    },
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    following: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+    ],
 });
 
 // Middleware to update updatedAt field before saving the document
 userSchema.pre('save', function (next) {
-    this.updatedAt = new Date();
+    this.updated_at = new Date();
     next();
 });
 
 const User = model('User', userSchema);
 
-module.exports = User;
+export default User;
