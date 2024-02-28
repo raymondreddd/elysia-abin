@@ -7,7 +7,8 @@ import { AuthRouter } from "./api/auth";
  * 
  * @todo: 
  * 1. Rate Limiter
- * 2. H
+ * 2. Helmet ?
+ * 3. json parser
  */
 const Server = async () => {
     const app = new Elysia();
@@ -27,8 +28,13 @@ const Server = async () => {
     /**
      * @context Route handlers
      */
-    app.use(AuthRouter);
-
+    app.group('/api',
+        (app) => app
+            .use(AuthRouter)
+            .get('/', ({ }) => {
+                console.log('Welcome to elysia API!')
+            })
+    );
 
     return { app };
 }
