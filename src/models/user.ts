@@ -41,14 +41,6 @@ const userSchema = new Schema({
     bio: {
         type: String
     },
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
-    },
     followers: [
         {
             type: Schema.Types.ObjectId,
@@ -61,12 +53,8 @@ const userSchema = new Schema({
             ref: "User",
         },
     ],
-});
-
-// Middleware to update updatedAt field before saving the document
-userSchema.pre('save', function (next) {
-    this.updated_at = new Date();
-    next();
+}, {
+    timestamps: true
 });
 
 const User = model('User', userSchema);
