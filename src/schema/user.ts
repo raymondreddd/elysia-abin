@@ -1,13 +1,26 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface UserDocumentCreate extends Document {
+export interface UserDocument extends Document {
+    name: string;
     username: string;
     email: string;
     password: string;
     avatar?: string;
     bio?: string;
-    createdAt: Date;
-    updatedAt: Date;
+}
+
+export interface SignupData {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    avatar?: string;
+    bio?: string;
+}
+
+export interface SigninData {
+    username: string;
+    password: string;
 }
 
 const userSchema = new Schema({
@@ -57,6 +70,6 @@ const userSchema = new Schema({
     timestamps: true
 });
 
-const User = model('User', userSchema);
+const User = model<UserDocument>('User', userSchema);
 
 export default User;

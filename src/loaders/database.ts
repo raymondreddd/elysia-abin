@@ -8,7 +8,7 @@ class Database {
   static async createConnection() {
     const { DB_HOST, DB_NAME, DB_PORT, DB_URL } = Bun.env;
 
-    const dbConnURL = DB_URL;
+    const dbConnURL: string = DB_URL as string;
 
     const dbName = DB_NAME as string;
 

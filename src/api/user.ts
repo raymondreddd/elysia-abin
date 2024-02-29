@@ -1,9 +1,15 @@
 import { Elysia, t } from "elysia"
+import { isAuthenticated } from "../hooks/authHooks";
 
 export const UserRouter = new Elysia({ prefix: '/user' })
-    .post('/', ({ }) => {
-        console.log('signup hit');
-    })
+    /**
+     * @description: This places a middleware, which authenticates cookie
+     * 
+     * if cookie is valid, it extends context to include `user` and `isLoggedIn` to true
+     * 
+     * else if cookie is invalid it extends context to `isLoggedIn` as false
+     */
+    .use(isAuthenticated)
     .get('/me', ({ }) => {
         /**
          * @description fetch user data of current user
